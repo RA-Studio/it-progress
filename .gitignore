@@ -1,2 +1,8 @@
 node_modules
 /.idea
+/src/
+/build/
+gulpfile.js
+package-lock.json
+package.json
+README.md
