@@ -1,12 +1,2 @@
 node_modules
 /.idea
-/src/
-/src/fonts/
-/src/images/
-/src/scripts/
-/src/styles/
-/src/templates/
-/gulpfile.js
-/package.json
-/package-lock.json
-/README.md
