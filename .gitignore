@@ -6,3 +6,4 @@ gulpfile.js
 package-lock.json
 package.json
 README.md
+/public_html/bitrix/
