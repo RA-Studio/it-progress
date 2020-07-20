@@ -5,7 +5,7 @@ class BlocksSort extends CUserTypeString
     protected static $headerSet = 0;
 
     public function GetTemplate($template, $component){
-        ?><pre><?print_r()?></pre><?
+
         include $template.'/.description.php';
         /** @var array $arTemplateDescription*/
         return  [end(explode('/',$template)) =>  array_merge($arTemplateDescription, ['COMPONENT'=>$component]) ]  ;
@@ -38,7 +38,7 @@ class BlocksSort extends CUserTypeString
         {
             $arBlocksTemplates[$prop_fields['ID']] = [];
             $arAllowedBlocks[$prop_fields['CODE']] = ["ID"=>$prop_fields['ID'],"NAME" => $prop_fields['NAME'], "ANCHOR"=> strtolower($prop_fields['CODE'])];
-            if ($prop_fields['MULTIPLE'] == 'Y' || $prop_fields['PROPERTY_TYPE'] == 'E' || $prop_fields['PROPERTY_TYPE'] == 'G' || $prop_fields['USER_TYPE'] == 'IB'){
+            if (($prop_fields['MULTIPLE'] == 'Y' && ($prop_fields['PROPERTY_TYPE'] != 'S' || $prop_fields['PROPERTY_TYPE'] == 'E')) || $prop_fields['PROPERTY_TYPE'] == 'G' || $prop_fields['USER_TYPE'] == 'IB'){
                 $templates = glob($_SERVER['DOCUMENT_ROOT'].'/local/templates/itp/components/rastudio/news.list/block_*');
                 foreach ($templates as $template){
                     $arBlocksTemplates[$prop_fields['ID']] += BlocksSort::GetTemplate($template,"rastudio:news.list");
@@ -47,6 +47,12 @@ class BlocksSort extends CUserTypeString
                 $templates = glob($_SERVER['DOCUMENT_ROOT'].'/local/templates/itp/components/slam/easyform/block_*');
                 foreach ($templates as $template){
                     $arBlocksTemplates[$prop_fields['ID']] += BlocksSort::GetTemplate($template, "slam:easyform");
+
+                }
+            }elseif ($prop_fields['USER_TYPE'] == 'M'){
+                $templates = glob($_SERVER['DOCUMENT_ROOT'].'/local/templates/itp/components/bitrix/menu/block_*');
+                foreach ($templates as $template){
+                    $arBlocksTemplates[$prop_fields['ID']] += BlocksSort::GetTemplate($template, "bitrix:menu");
 
                 }
             }else{

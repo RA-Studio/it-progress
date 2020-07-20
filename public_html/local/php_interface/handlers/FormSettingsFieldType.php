@@ -52,7 +52,7 @@ class FormSettings extends CUserTypeString
             <table class="sort-blocks-table">
                 <tr class="header" <?if(!self::$headerSet):?>style="display:table-row"<?endif;?>>
                     <td>
-                        <input type="text" size="10" name="<?=$strHTMLControlName["VALUE"]?>[FORM_ID]" placeholder="ID формы" value="<?=$value["VALUE"]["FORM_ID"]?>">
+                        <input type="text" size="10" name="<?=$strHTMLControlName["VALUE"]?>" placeholder="ID формы" value="<?=$value["VALUE"]?>">
                     </td>
                 </tr>
             </table>
@@ -86,7 +86,7 @@ class FormSettings extends CUserTypeString
     {
        $return = false;
 
-       if(!empty($value["VALUE"]["BLOCK"]) && !empty($value["VALUE"]["SORT"]))
+       if(!empty($value["VALUE"]))
        {
            $value["VALUE"] = serialize($value["VALUE"]);
 

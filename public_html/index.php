@@ -1,9 +1,9 @@
 <?
 require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
 $APPLICATION->SetTitle("Главная");
-
 $GLOBALS['srtuctureFilter'][] = [
     "=IBLOCK_SECTION_ID" => "1",
+
 ];
 ?><?$APPLICATION->IncludeComponent(
 	"bitrix:catalog", 

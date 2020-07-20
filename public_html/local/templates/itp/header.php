@@ -1,6 +1,8 @@
 <?
 if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 	die();
+setSettings('CONTACTS',4,6);
+setSettings('SITE',11,35);
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,15 +44,14 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
     <header class="header visible">
         <div class="header-wrap">
             <div class="header-wrap-container">
-
                 <div class="header-info">
                     <?if ($APPLICATION->GetCurPage() =='/'){?>
                         <span class="header-info-logo" href="index.html">
-                            <img src="<?=SITE_TEMPLATE_PATH?>/assets/images/logo.png" alt="">
+                            <img src="<?=$GLOBALS['UF_CONTENT_SITE']['UF_LOGO']['VALUE']?>" alt="">
                         </span>
                     <?}else{?>
                         <a class="header-info-logo" href="/">
-                            <img src="<?=SITE_TEMPLATE_PATH?>/assets/images/logo.png" alt="">
+                            <img src="<?=$GLOBALS['UF_CONTENT_SITE']['UF_LOGO']['VALUE']?>" alt="">
                         </a>
                     <?}?>
                     <div class="header-info-wrap">
@@ -78,59 +79,99 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
                         </div>
                     </div>
                 </div>
-
-
-                <div class="header-menu">
-                    <div class="header-menu-item list-item"><a class="header-menu-item__link" href="catalog.html">Сопровождение 1С</a>
-                        <div class="header-menu-item-list">
-                            <div class="header-menu-item-list-col">
-                                <div class="header-menu-item-list-col__title">ИТС</div><a class="header-menu-item-list-col__link" href="product.html">Проф</a><a class="header-menu-item-list-col__link" href="product.html">Техно</a><a class="header-menu-item-list-col__link" href="product.html">Медицина</a><a class="header-menu-item-list-col__link" href="product.html">Строительство</a><a class="header-menu-item-list-col__link" href="product.html">Бюджет</a>
-                            </div>
-                            <div class="header-menu-item-list-col">
-                                <div class="header-menu-item-list-col__title">Услуги 1С</div><a class="header-menu-item-list-col__link" href="product.html">Переход</a><a class="header-menu-item-list-col__link" href="product.html">Перенос данных</a><a class="header-menu-item-list-col__link" href="product.html">Доработка 1С</a>
-                            </div>
-                            <div class="header-menu-item-list-col"><a class="header-menu-item-list-col__link" href="product.html">Внедрение 1С</a><a class="header-menu-item-list-col__link" href="product.html">Обслуживание 1С</a><a class="header-menu-item-list-col__link" href="product.html">Электронный документооборот</a><a class="header-menu-item-list-col__link" href="product.html">Электронная отчетность</a></div>
-                        </div>
-                    </div>
-                    <div class="header-menu-item list-item"><a class="header-menu-item__link" href="catalog.html">Сервисы 1С</a></div>
-                    <div class="header-menu-item list-item"><a class="header-menu-item__link" href="catalog.html">Лицензии</a></div>
-                    <div class="header-menu-item"><a class="header-menu-item__link" href="delivery.html">Оплата и доставка</a></div>
-                    <div class="header-menu-item list-item"><a class="header-menu-item__link" href="documents.html">О компании</a>
-                        <div class="header-menu-item-list">
-                            <div class="header-menu-item-list-col"><a class="header-menu-item-list-col__link" href="documents.html">Документы</a><a class="header-menu-item-list-col__link" href="team.html">Наша команда</a><a class="header-menu-item-list-col__link" href="clients.html">Наши клиенты</a><a class="header-menu-item-list-col__link" href="partners.html">Наши партнеры</a><a class="header-menu-item-list-col__link" href="career.html">Карьера</a></div>
-                        </div>
-                    </div>
-                    <div class="header-menu-item"><a class="header-menu-item__link" href="contacts.html">Контакты</a></div>
-                </div>
-                <div class="header-search"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <?$APPLICATION->IncludeComponent(
+                    "bitrix:menu",
+                    "top",
+                    Array(
+                        "ALLOW_MULTI_SELECT" => "N",
+                        "CHILD_MENU_TYPE" => "top",
+                        "COMPONENT_TEMPLATE" => "top",
+                        "DELAY" => "N",
+                        "MAX_LEVEL" => "1",
+                        "MENU_CACHE_GET_VARS" => array(),
+                        "MENU_CACHE_TIME" => "3600",
+                        "MENU_CACHE_TYPE" => "N",
+                        "MENU_CACHE_USE_GROUPS" => "Y",
+                        "ROOT_MENU_TYPE" => "top",
+                        "USE_EXT" => "Y"
+                    )
+                );?>
+                <div class="header-search">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.7832 14.3911L20 18.6069L18.6069 20L14.3911 15.7832C12.8224 17.0407 10.8713 17.7246 8.86088 17.7218C3.96968 17.7218 0 13.7521 0 8.86088C0 3.96968 3.96968 0 8.86088 0C13.7521 0 17.7218 3.96968 17.7218 8.86088C17.7246 10.8713 17.0407 12.8224 15.7832 14.3911ZM13.8082 13.6605C15.0577 12.3756 15.7555 10.6532 15.7527 8.86088C15.7527 5.05267 12.6681 1.96909 8.86088 1.96909C5.05267 1.96909 1.96909 5.05267 1.96909 8.86088C1.96909 12.6681 5.05267 15.7527 8.86088 15.7527C10.6532 15.7555 12.3756 15.0577 13.6605 13.8082L13.8082 13.6605Z" fill="#00458B"/>
                     </svg>
                 </div>
-                <div class="header-burger"><svg width="35" height="12" viewBox="0 0 35 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="header-burger">
+                    <svg width="35" height="12" viewBox="0 0 35 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0 1H35" stroke="#00458B" stroke-width="2"/>
                         <path d="M13 11H35" stroke="#00458B" stroke-width="2"/>
                     </svg>
                 </div>
             </div>
         </div>
-        <div class="header-searchform">
-            <form action="#">
-                <label><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14.2049 12.952L18 16.7462L16.7462 18L12.952 14.2049C11.5402 15.3366 9.78419 15.9522 7.9748 15.9496C3.57271 15.9496 0 12.3769 0 7.9748C0 3.57271 3.57271 0 7.9748 0C12.3769 0 15.9496 3.57271 15.9496 7.9748C15.9522 9.78419 15.3366 11.5402 14.2049 12.952ZM12.4274 12.2945C13.5519 11.138 14.18 9.58786 14.1774 7.9748C14.1774 4.54741 11.4013 1.77218 7.9748 1.77218C4.54741 1.77218 1.77218 4.54741 1.77218 7.9748C1.77218 11.4013 4.54741 14.1774 7.9748 14.1774C9.58786 14.18 11.138 13.5519 12.2945 12.4274L12.4274 12.2945Z" fill="black" fill-opacity="0.25"/>
-                    </svg>
-                    <input class="header-searchform__input empty" type="text" id="txt" placeholder="Поиск по сайту..." maxlength="55" autocomplete="off" name="search">
-                </label>
-            </form>
-            <div class="header-searchform-list"><a class="header-searchform-list-item" href="product.html">
-                    <div class="header-searchform-list-item__title">1С:Предприятие 8. Управляющий</div>
-                    <div class="header-searchform-list-item__text">Управленческий учет</div></a><a class="header-searchform-list-item" href="product.html">
-                    <div class="header-searchform-list-item__title">1С:Управление торговлей 8</div>
-                    <div class="header-searchform-list-item__text">Торговый и складской учет</div></a><a class="header-searchform-list-item" href="product.html">
-                    <div class="header-searchform-list-item__title">1С:Розница 8</div>
-                    <div class="header-searchform-list-item__text">Торговый и складской учет</div></a><a class="header-searchform-list-item" href="product.html">
-                    <div class="header-searchform-list-item__title">1С:Зарплата и управление персоналом 8</div>
-                    <div class="header-searchform-list-item__text">Регламентированный учет</div></a></div>
-            </div>
+        <?$APPLICATION->IncludeComponent(
+	"bitrix:catalog.search",
+	"searchTop",
+	array(
+		"ACTION_VARIABLE" => "action",
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"BASKET_URL" => "/personal/basket.php",
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "A",
+		"CHECK_DATES" => "N",
+		"COMPONENT_TEMPLATE" => "searchTop",
+		"CONVERT_CURRENCY" => "N",
+		"DETAIL_URL" => "",
+		"DISPLAY_BOTTOM_PAGER" => "Y",
+		"DISPLAY_COMPARE" => "N",
+		"DISPLAY_TOP_PAGER" => "N",
+		"ELEMENT_SORT_FIELD" => "sort",
+		"ELEMENT_SORT_FIELD2" => "id",
+		"ELEMENT_SORT_ORDER" => "asc",
+		"ELEMENT_SORT_ORDER2" => "desc",
+		"HIDE_NOT_AVAILABLE" => "N",
+		"HIDE_NOT_AVAILABLE_OFFERS" => "N",
+		"IBLOCK_ID" => "4",
+		"IBLOCK_TYPE" => "structure",
+		"LINE_ELEMENT_COUNT" => "3",
+		"NO_WORD_LOGIC" => "N",
+		"OFFERS_LIMIT" => "5",
+		"PAGER_DESC_NUMBERING" => "N",
+		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+		"PAGER_SHOW_ALL" => "Y",
+		"PAGER_SHOW_ALWAYS" => "N",
+		"PAGER_TEMPLATE" => ".default",
+		"PAGER_TITLE" => "Товары",
+		"PAGE_ELEMENT_COUNT" => "3",
+		"PRICE_CODE" => array(
+		),
+		"PRICE_VAT_INCLUDE" => "Y",
+		"PRODUCT_ID_VARIABLE" => "id",
+		"PRODUCT_PROPERTIES" => array(
+		),
+		"PRODUCT_PROPS_VARIABLE" => "prop",
+		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
+		"PROPERTY_CODE" => array(
+			0 => "",
+			1 => "",
+		),
+		"RESTART" => "N",	// Искать без учета морфологии (при отсутствии результата поиска)
+		"SECTION_ID_VARIABLE" => "SECTION_ID",	// Название переменной, в которой передается код группы
+		"SECTION_URL" => "",	// URL, ведущий на страницу с содержимым раздела
+		"SHOW_PRICE_COUNT" => "1",	// Выводить цены для количества
+		"USE_LANGUAGE_GUESS" => "Y",	// Включить автоопределение раскладки клавиатуры
+		"USE_PRICE_COUNT" => "N",	// Использовать вывод цен с диапазонами
+		"USE_PRODUCT_QUANTITY" => "N",	// Разрешить указание количества товара
+		"USE_SEARCH_RESULT_ORDER" => "N",	// Использовать сортировку результатов по релевантности
+		"USE_TITLE_RANK" => "N",	// При ранжировании результата учитывать заголовки
+	),
+	false
+);?>
+
     </header>
 <?if(!CSite::InDir('/index.php')){?>
     <?$APPLICATION->IncludeComponent(
@@ -142,5 +183,7 @@ if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
             "START_FROM" => "0"
         )
     );?>
+    <div class="content">
+<?}else{?>
+    <div class="main">
 <?}?>
-						

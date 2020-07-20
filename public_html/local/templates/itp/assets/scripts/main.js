@@ -65,14 +65,16 @@ $(document).on('click touchend', function (e) {
 		}
 	}
 });
-function resizable(el, factor) {
-	var int = Number(factor) || 7.7;
-	function resize() { el.style.width = ((el.value.length + 1) * int) + 'px' }
-	var e = 'keyup,keypress,focus,blur,change,input'.split(',');
-	for (var i in e) el.addEventListener(e[i], resize, false);
-	resize();
-}
-resizable(document.getElementById('txt'), 12);
+$(document).ready(function() {
+	function resizable(el, factor) {
+		var int = Number(factor) || 7.7;
+		function resize() { el.style.width = ((el.value.length + 1) * int) + 'px' }
+		var e = 'keyup,keypress,focus,blur,change,input'.split(',');
+		for (var i in e) el.addEventListener(e[i], resize, false);
+		resize();
+	}
+	resizable(document.getElementById('txt'), 12);
+});
 $(document).on('input', '.header-searchform__input', function (e) {
 	if ($(this).val() != '') {
 		$(this).removeClass('empty');
@@ -87,10 +89,19 @@ $(document).on('input', '.header-searchform__input', function (e) {
 
 /*Смена города*/
 $(document).on('click', '.header-info-wrap-select-top-col', function (e) {
+	var town = $(this).find('.header-info-wrap-select-top-col__city').html();
+	var phone = $(this).find('.header-info-wrap-select-top-col__tel').html();
 	if (!$(this).hasClass('active')) {
 		$(document).find('.header-info-wrap-select-top-col').removeClass('active');
 		$(this).addClass('active');
 	}
+	$('.header-info-wrap-content .header-info-wrap__tel').attr('href','tel:'+phone);
+	$('.header-info-wrap-content .header-info-wrap__tel').html(phone);
+	$('.header-info-wrap-content .header-info-wrap__place').html(town);
+
+console.log(town);
+console.log(phone);
+
 });
 if (document.documentElement.clientWidth < 768) {
 	$(document).on('click', '.header-info-wrap-select-top-col', function (e) {
@@ -102,6 +113,30 @@ if (document.documentElement.clientWidth < 768) {
 	});
 }
 /*Смена города Конец*/
+
+/*поиск*/
+$(document).on('input','[name="q"]',function (e) {
+	var form = $(this).closest('form');
+	var list = form.siblings('.header-searchform-list');
+	var data = form.serialize();
+	if($(this).val().length>=3){
+		console.log(data);
+		$.ajax({
+			method:'GET',
+			data:data,
+			success:function(result){
+				if (list.length === 0){
+					form.after($(result).find('.header-searchform .header-searchform-list'));
+				}else{
+					list.html($(result).find('.header-searchform .header-searchform-list').html());
+				}
+			}
+		})
+	}else if($(this).val().length === 0){
+		list.html('');
+	}
+})
+/*поиск конец*/
 
 
 /*Мобильное меню*/
@@ -331,3 +366,13 @@ if (horizontalElem) {
 	horizontalElem.scrollLeft += activeElem.offsetLeft - (windowWidth / 2) + (activeElementWidth / 2);
 }
 /*Прокрутка Меню при загрузке до активного пункта Конец*/
+
+
+/*Позиция Сайдбара*/
+$(document).ready(function() {
+	let element = $('.product-main-col:last-child'),
+		offsetTop = $('.product .product-top').offset().top + $('.product .product-top').outerHeight() - 10;
+	console.log(offsetTop)
+	element.css('top', offsetTop);
+});
+/*Позиция Сайдбара Конец*/

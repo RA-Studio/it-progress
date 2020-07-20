@@ -13,8 +13,7 @@
 /** @var CBitrixComponent $component */
 
 $this->setFrameMode(true);
-global $USER;
-if($USER->IsAdmin()){
+
     $APPLICATION->IncludeComponent(
         "bitrix:catalog.section.list",
         "empty",
@@ -35,10 +34,7 @@ if($USER->IsAdmin()){
         $component,
         ($arParams["SHOW_TOP_ELEMENTS"] !== "N" ? array("HIDE_ICONS" => "Y") : array())
     );
-?>
 
-<?}else{?>
-<?}
 $arFilter = array('IBLOCK_ID' => $arParams["IBLOCK_ID"], 'ACTIVE'=>'Y', 'UF_MAIN'=>1);
 $rsSections = CIBlockSection::GetList(array(), $arFilter,false,array('NAME','UF_MAIN','UF_PAGE'));
 if ($mainSection = $rsSections->Fetch())
@@ -117,5 +113,4 @@ if ($mainSection = $rsSections->Fetch())
 	false
 );
 }
-?><!--
-<pre><?/*print_r($arResult)*/?></pre>-->
+?>

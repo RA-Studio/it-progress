@@ -13,65 +13,82 @@
 $this->setFrameMode(true);
 ?>
 <div class="main-ways">
-    <div class="main-ways__subtitle">Услуги</div>
-    <div class="main-ways__title">Направление работы нашей компании</div>
-    <div class="main-ways-tabs tabs">
-        <div class="main-ways-tabs-navigation-wrap">
-            <div class="main-ways-tabs-navigation"><a class="main-ways-tabs-navigation__item tabs-navigation-item active" href="#tab1">Сопровождение 1С</a><a class="main-ways-tabs-navigation__item tabs-navigation-item" href="#tab2">Сервисы 1С</a><a class="main-ways-tabs-navigation__item tabs-navigation-item" href="#tab3">Лицензии</a></div>
-        </div>
-        <div class="main-ways-tabs-tab tabs-tab" id="tab1">
-            <div class="main-ways-tabs-tab-wrap">
-                <div class="main-ways-tabs-tab-item">
-                    <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way1.svg" alt="">
-                        <div class="main-ways-tabs-tab-item__title">Регламентированный учет</div><a class="main-ways-tabs-tab-item__link" href="#">1С:Бухгалтерия 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Зарплата и управление персоналом 8</a>
-                    </div>
+    <?if(!empty($arResult['SUBTITLE'])){?>
+        <div class="main-ways__subtitle"><?=$arResult['SUBTITLE']?></div>
+    <?}
+    if(!empty($arResult['TITLE'])){?>
+        <div class="main-ways__title"><?=$arResult['TITLE']?></div>
+    <?}
+    if(!empty($arResult['IBLOCKS'])){?>
+        <div class="main-ways-tabs tabs">
+            <div class="main-ways-tabs-navigation-wrap">
+                <div class="main-ways-tabs-navigation">
+                    <?$firstkey = array_keys($arResult['IBLOCKS'])[0];
+                    foreach ($arResult['IBLOCKS'] as $key =>$iblock){
+                        if (empty($iblock['SECTIONS'])) continue;
+                        ?><a class="main-ways-tabs-navigation__item tabs-navigation-item <?=$firstkey===$key?'active':''?>" href="#tab_service_<?=$iblock['ID']?>"><?=$iblock['NAME']?></a>
+                    <?}?>
                 </div>
-                <div class="main-ways-tabs-tab-item">
-                    <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way2.svg" alt="">
-                        <div class="main-ways-tabs-tab-item__title">Торговый и складской учет </div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление торговлей 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. CRM</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Розница 8</a>
-                    </div>
-                </div>
-                <div class="main-ways-tabs-tab-item">
-                    <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way3.svg" alt="">
-                        <div class="main-ways-tabs-tab-item__title">Управленческий учет</div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление нашей фирмой 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Документооборот 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. Управляющий</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Договорчики 8</a>
-                    </div>
-                </div>
-                <div class="main-ways-tabs-tab-item"><a class="main-ways-tabs-tab-item-more" href="#">
-                        <div class="main-ways-tabs-tab-item-more__circle"></div>
-                        <div class="main-ways-tabs-tab-item-more__text">Все направления</div></a></div>
             </div>
-        </div>
-        <div class="main-ways-tabs-tab tabs-tab" id="tab2">
-            <div class="main-ways-tabs-tab-wrap">
-                <div class="main-ways-tabs-tab-item">
-                    <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way2.svg" alt="">
-                        <div class="main-ways-tabs-tab-item__title">Торговый и складской учет </div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление торговлей 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. CRM</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Розница 8</a>
+            <?foreach ($arResult['IBLOCKS'] as $iblock){
+                if (empty($iblock['SECTIONS'])) continue;
+                ?><div class="main-ways-tabs-tab tabs-tab" id="tab_service_<?=$iblock['ID']?>">
+                    <div class="main-ways-tabs-tab-wrap">
+                        <?foreach ($iblock['SECTIONS'] as $section){?>
+                            <div class="main-ways-tabs-tab-item">
+                                <div class="main-ways-tabs-tab-item-wrap">
+                                    <img src="<?=CFile::GetPath($section['UF_PHOTO'])?>" alt="<?=$section['NAME']?>">
+                                    <div class="main-ways-tabs-tab-item__title"><?=$section['NAME']?></div>
+                                    <?foreach ($section['ITEMS'] as $item){?>
+                                        <a class="main-ways-tabs-tab-item__link" href="<?=$item['DETAIL_PAGE_URL']?>"><?=$item['NAME']?></a>
+                                    <?}?>
+                                </div>
+                            </div>
+                        <?}?>
+                        <div class="main-ways-tabs-tab-item">
+                            <a class="main-ways-tabs-tab-item-more" href="<?=$iblock['LINK']?>">
+                                <div class="main-ways-tabs-tab-item-more__circle"></div>
+                                <div class="main-ways-tabs-tab-item-more__text"><?=GetMessage('BTN_ALL')?></div>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="main-ways-tabs-tab-item">
-                    <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way3.svg" alt="">
-                        <div class="main-ways-tabs-tab-item__title">Управленческий учет</div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление нашей фирмой 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Документооборот 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. Управляющий</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Договорчики 8</a>
+            <?}?>
+            <?/*
+            <div class="main-ways-tabs-tab tabs-tab" id="tab2">
+                <div class="main-ways-tabs-tab-wrap">
+                    <div class="main-ways-tabs-tab-item">
+                        <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way2.svg" alt="">
+                            <div class="main-ways-tabs-tab-item__title">Торговый и складской учет </div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление торговлей 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. CRM</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Розница 8</a>
+                        </div>
                     </div>
+                    <div class="main-ways-tabs-tab-item">
+                        <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way3.svg" alt="">
+                            <div class="main-ways-tabs-tab-item__title">Управленческий учет</div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление нашей фирмой 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Документооборот 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. Управляющий</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Договорчики 8</a>
+                        </div>
+                    </div>
+                    <div class="main-ways-tabs-tab-item"><a class="main-ways-tabs-tab-item-more" href="#">
+                            <div class="main-ways-tabs-tab-item-more__circle"></div>
+                            <div class="main-ways-tabs-tab-item-more__text">Все направления</div></a></div>
                 </div>
-                <div class="main-ways-tabs-tab-item"><a class="main-ways-tabs-tab-item-more" href="#">
-                        <div class="main-ways-tabs-tab-item-more__circle"></div>
-                        <div class="main-ways-tabs-tab-item-more__text">Все направления</div></a></div>
             </div>
-        </div>
-        <div class="main-ways-tabs-tab tabs-tab" id="tab3">
-            <div class="main-ways-tabs-tab-wrap">
-                <div class="main-ways-tabs-tab-item">
-                    <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way3.svg" alt="">
-                        <div class="main-ways-tabs-tab-item__title">Управленческий учет</div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление нашей фирмой 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Документооборот 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. Управляющий</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Договорчики 8</a>
+            <div class="main-ways-tabs-tab tabs-tab" id="tab3">
+                <div class="main-ways-tabs-tab-wrap">
+                    <div class="main-ways-tabs-tab-item">
+                        <div class="main-ways-tabs-tab-item-wrap"><img src="assets/images/main-way3.svg" alt="">
+                            <div class="main-ways-tabs-tab-item__title">Управленческий учет</div><a class="main-ways-tabs-tab-item__link" href="#">1С:Управление нашей фирмой 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Документооборот 8</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Предприятие 8. Управляющий</a><a class="main-ways-tabs-tab-item__link" href="#">1С:Договорчики 8</a>
+                        </div>
                     </div>
+                    <div class="main-ways-tabs-tab-item"><a class="main-ways-tabs-tab-item-more" href="#">
+                            <div class="main-ways-tabs-tab-item-more__circle"></div>
+                            <div class="main-ways-tabs-tab-item-more__text">Все направления</div></a></div>
                 </div>
-                <div class="main-ways-tabs-tab-item"><a class="main-ways-tabs-tab-item-more" href="#">
-                        <div class="main-ways-tabs-tab-item-more__circle"></div>
-                        <div class="main-ways-tabs-tab-item-more__text">Все направления</div></a></div>
             </div>
+            */?>
         </div>
-    </div>
+    <?}?>
 </div>
+<?/*
 <div class="news-list">
 <?if($arParams["DISPLAY_TOP_PAGER"]):?>
 	<?=$arResult["NAV_STRING"]?><br />
@@ -144,3 +161,4 @@ $this->setFrameMode(true);
 	<br /><?=$arResult["NAV_STRING"]?>
 <?endif;?>
 </div>
+*/?>
